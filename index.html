@@ -70,6 +70,175 @@
 
 <body>
 
+    <!-- ══ PASSWORD LOCK SCREEN ══════════════════════════════════ -->
+    <div id="lockScreen" style="
+      position:fixed; inset:0; z-index:9999;
+      background: radial-gradient(ellipse at 60% 40%, #3a001e 0%, #0d0008 70%);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      font-family:'Lato',sans-serif; text-align:center;
+      padding:24px;
+    ">
+        <!-- Floating mini hearts inside lock screen -->
+        <div id="lockHearts" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;"></div>
+
+        <div style="position:relative;z-index:2;max-width:420px;width:100%;">
+            <div style="font-size:4rem;margin-bottom:16px;animation:lsPulse 2s ease infinite;">🔐</div>
+            <h1 style="
+          font-family:'Playfair Display',serif;
+          font-size:clamp(1.8rem,5vw,3rem);
+          color:#fff0f4;
+          margin-bottom:8px;
+          text-shadow:0 0 30px rgba(201,21,74,.6);
+        ">This is just for you 💕</h1>
+            <p style="color:#ffaabb;font-style:italic;margin-bottom:32px;font-size:1rem;">
+                Enter the secret to open your gift 🎁
+            </p>
+
+            <div style="position:relative;width:100%;">
+                <input id="pwInput" type="password" placeholder="Enter password..." style="
+            width:100%; padding:16px 56px 16px 20px;
+            border-radius:50px; border:2px solid rgba(201,21,74,.4);
+            background:rgba(255,255,255,.07);
+            color:#fff; font-size:1.05rem;
+            outline:none; letter-spacing:0.08em;
+            transition:border-color .3s;
+            font-family:'Lato',sans-serif;
+          " oninput="document.getElementById('pwError').textContent=''">
+                <!-- show/hide toggle -->
+                <span id="eyeBtn" onclick="toggleEye()" style="
+            position:absolute;right:18px;top:50%;transform:translateY(-50%);
+            cursor:pointer;font-size:1.2rem;user-select:none;
+          ">👁️</span>
+            </div>
+
+            <p id="pwError" style="color:#ff6b8a;font-size:.85rem;min-height:1.2rem;margin:10px 0 0;"></p>
+
+            <button onclick="checkPassword()" style="
+          margin-top:20px;
+          width:100%; padding:16px;
+          border:none; border-radius:50px;
+          background:linear-gradient(135deg,#c9154a,#ff6b8a);
+          color:#fff; font-size:1.1rem; font-weight:700;
+          cursor:pointer; letter-spacing:.04em;
+          box-shadow:0 6px 28px rgba(201,21,74,.55);
+          transition:transform .2s,box-shadow .2s;
+          font-family:'Lato',sans-serif;
+        " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+                Open 💖
+            </button>
+        </div>
+
+        <style>
+            @keyframes lsPulse {
+
+                0%,
+                100% {
+                    transform: scale(1)
+                }
+
+                50% {
+                    transform: scale(1.15)
+                }
+            }
+
+            @keyframes lsHeart {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0) rotate(0deg);
+                }
+
+                10% {
+                    opacity: .6;
+                }
+
+                90% {
+                    opacity: .3;
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: translateY(-110vh) rotate(360deg);
+                }
+            }
+
+            #pwInput:focus {
+                border-color: #ff6b8a !important;
+            }
+
+            #lockScreen.hide {
+                animation: lsFadeOut .8s ease forwards;
+                pointer-events: none;
+            }
+
+            @keyframes lsFadeOut {
+                to {
+                    opacity: 0;
+                    transform: scale(1.04);
+                }
+            }
+        </style>
+    </div>
+    <!-- ══ END LOCK SCREEN ════════════════════════════════════════ -->
+
+    <script>
+        // ── Lock screen logic ─────────────────────────────────────
+        const PASS = 'NiruLakshman3104';
+
+        // If already unlocked this session, skip lock screen instantly
+        if (sessionStorage.getItem('unlocked') === '1') {
+            document.getElementById('lockScreen').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const val = document.getElementById('pwInput').value;
+            if (val === PASS) {
+                sessionStorage.setItem('unlocked', '1');
+                const ls = document.getElementById('lockScreen');
+                ls.classList.add('hide');
+                setTimeout(() => ls.style.display = 'none', 850);
+            } else {
+                const err = document.getElementById('pwError');
+                err.textContent = '❌ Wrong password, try again!';
+                document.getElementById('pwInput').style.borderColor = '#ff3c6c';
+                document.getElementById('pwInput').animate([
+                    { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' },
+                    { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 350 });
+                setTimeout(() => {
+                    document.getElementById('pwInput').style.borderColor = 'rgba(201,21,74,.4)';
+                }, 600);
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('pwInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // Eye toggle
+        function toggleEye() {
+            const inp = document.getElementById('pwInput');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        }
+
+        // Mini floating hearts on lock screen
+        const lh = document.getElementById('lockHearts');
+        const lhEmojis = ['❤️', '💕', '💖', '🌹', '💗'];
+        function spawnLH() {
+            const el = document.createElement('div');
+            el.textContent = lhEmojis[Math.floor(Math.random() * lhEmojis.length)];
+            el.style.cssText = `position:absolute;bottom:-40px;font-size:${.7 + Math.random() * 1.2}rem;opacity:0;
+          left:${Math.random() * 100}vw;animation:lsHeart ${6 + Math.random() * 7}s linear infinite;
+          animation-delay:${Math.random() * 4}s;user-select:none;`;
+            lh.appendChild(el);
+            setTimeout(() => el.remove(), 14000);
+        }
+        setInterval(spawnLH, 800);
+        for (let i = 0; i < 10; i++) spawnLH();
+    </script>
+
     <!-- Floating hearts background -->
     <div class="hearts-bg" id="heartsBg"></div>
 
