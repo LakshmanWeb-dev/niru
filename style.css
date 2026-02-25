@@ -675,15 +675,229 @@ section {
 }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE — Tablet (≤768px)
 ============================================================ */
-@media (max-width: 600px) {
-  .letter-paper {
-    padding: 36px 24px;
+@media (max-width: 768px) {
+  section {
+    padding: 60px 16px;
   }
 
+  /* Hero */
+  .hero-content {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .cta-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
+  /* Flip cards — 2 columns */
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  /* Memory grid — 2 columns */
+  .memories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  /* Gallery — 2 columns */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 220px;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  /* Letter */
+  .letter-paper {
+    padding: 40px 28px;
+  }
+
+  /* Promise */
+  .promise-item {
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  /* Big heart */
+  .big-heart {
+    font-size: 6rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (≤480px)
+============================================================ */
+@media (max-width: 480px) {
+  section {
+    padding: 48px 14px;
+    min-height: unset;
+  }
+
+  .section-sub {
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  /* Flip cards — 2 columns (small) */
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .flip-card {
+    height: 150px;
+  }
+
+  .flip-card-front .card-num {
+    font-size: 2rem;
+  }
+
+  .flip-card-back {
+    font-size: 0.82rem;
+    padding: 14px;
+  }
+
+  /* Memory grid — 1 column */
+  .memories-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .memory-card {
+    padding: 24px 18px;
+  }
+
+  /* Gallery — 1 column */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+    gap: 12px;
+  }
+
+  .gallery-section {
+    padding: 48px 14px;
+  }
+
+  /* Letter */
+  .letter-paper {
+    padding: 28px 18px;
+  }
+
+  .letter-greeting {
+    font-size: 1.6rem;
+  }
+
+  .letter-body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .letter-header {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  /* Promise */
+  .promise-list {
+    gap: 14px;
+  }
+
+  .promise-item {
+    gap: 12px;
+    padding: 14px 14px;
+    flex-wrap: nowrap;
+  }
+
+  .promise-icon {
+    font-size: 1.5rem;
+  }
+
+  .promise-item p {
+    font-size: 0.9rem;
+  }
+
+  /* Heart section */
+  .big-heart {
+    font-size: 5rem;
+  }
+
+  .heart-counter {
+    font-size: 1.3rem;
+  }
+
+  /* Final section */
+  .final-icon {
+    font-size: 3.5rem;
+  }
+
+  .final-message {
+    font-size: 1rem;
+  }
+
+  .stars-row {
+    font-size: 1.5rem;
+    letter-spacing: 0.15em;
+  }
+
+  /* Music button */
+  #musicBtn {
+    bottom: 16px;
+    right: 16px;
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Very small screens (≤370px)
+============================================================ */
+@media (max-width: 370px) {
+  .cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .flip-card {
+    height: 130px;
+  }
+
+  .letter-paper {
+    padding: 22px 14px;
+  }
+
+  .cta-btn {
+    font-size: 0.88rem;
   }
 }
 
@@ -708,6 +922,7 @@ section {
   background: linear-gradient(180deg, #0d0008 0%, #1a0010 50%, #0d0008 100%);
   min-height: auto;
   padding: 80px 24px;
+  overflow-x: hidden;
 }
 
 .gallery-grid {
@@ -743,6 +958,7 @@ section {
   object-position: center top;
   display: block;
   transition: transform 0.5s ease;
+  max-width: 100%;
 }
 
 .gallery-item:hover img {
@@ -788,6 +1004,13 @@ section {
   opacity: 1;
 }
 
+/* On touch devices, always show overlay */
+@media (hover: none) {
+  .gallery-overlay {
+    opacity: 1;
+  }
+}
+
 .gallery-overlay span {
   font-family: var(--font-script);
   font-size: 1.1rem;
@@ -809,19 +1032,4 @@ section {
   border-radius: 6px;
   color: #ff9ab2;
   font-size: 0.82rem;
-}
-
-/* Responsive: 2 columns on tablet, 1 on mobile */
-@media (max-width: 700px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 200px;
-  }
-}
-
-@media (max-width: 420px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: 220px;
-  }
 }

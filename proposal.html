@@ -30,10 +30,10 @@
         html,
         body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             background: var(--dark-bg);
             font-family: 'Lato', sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             color: #ffe0ea;
         }
 
@@ -79,14 +79,14 @@
         .stage {
             position: relative;
             z-index: 1;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 0;
-            padding: 24px;
+            padding: 32px 20px;
             text-align: center;
         }
 
@@ -157,11 +157,12 @@
         /* ── Buttons ── */
         .btn-row {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
             justify-content: center;
             margin-top: 12px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .btn-yes,
@@ -385,6 +386,53 @@
 
             100% {
                 transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* ── Mobile responsive ── */
+        @media (max-width: 480px) {
+            .main-question {
+                font-size: clamp(1.6rem, 7vw, 2.6rem);
+            }
+
+            .sub-text {
+                font-size: 0.9rem;
+                max-width: 100%;
+            }
+
+            .btn-yes,
+            .btn-no {
+                padding: 14px 32px;
+                font-size: 1rem;
+            }
+
+            .btn-row {
+                flex-direction: row;
+                gap: 16px;
+            }
+
+            .yes-title {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+
+            .yes-emoji {
+                font-size: 3.5rem;
+            }
+
+            .yes-msg {
+                font-size: 0.95rem;
+            }
+
+            .continue-btn {
+                padding: 12px 28px;
+                font-size: 0.95rem;
+            }
+
+            #musicBtn {
+                bottom: 16px;
+                right: 16px;
+                width: 46px;
+                height: 46px;
             }
         }
 
