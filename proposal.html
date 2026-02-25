@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I Have a Question For You 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --deep-rose: #8b0038;
+            --rose: #c9154a;
+            --pink: #ff6b8a;
+            --light-pink: #ffb3c6;
+            --gold: #f5c842;
+            --dark-bg: #0d0008;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            font-family: 'Lato', sans-serif;
+            overflow: hidden;
+            color: #ffe0ea;
+        }
+
+        /* ── Background hearts ── */
+        .bg-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bh {
+            position: absolute;
+            bottom: -40px;
+            font-size: 1rem;
+            opacity: 0;
+            animation: bhFloat linear infinite;
+            user-select: none;
+        }
+
+        @keyframes bhFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            10% {
+                opacity: .6;
+            }
+
+            90% {
+                opacity: .3;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-110vh) rotate(360deg);
+            }
+        }
+
+        /* ── Main stage ── */
+        .stage {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 24px;
+            text-align: center;
+        }
+
+        /* ── Phase 1: Intro text (cycling sentences) ── */
+        #intro-phase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            animation: fadeIn .8s ease both;
+        }
+
+        .sentence-tag {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--pink);
+            letter-spacing: .04em;
+            opacity: .85;
+            min-height: 2.5rem;
+            transition: opacity .5s;
+        }
+
+        .main-question {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: #fff0f4;
+            line-height: 1.2;
+            text-shadow: 0 0 40px rgba(201, 21, 74, .55);
+            animation: textGlow 3s ease infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 20px rgba(201, 21, 74, .4);
+            }
+
+            to {
+                text-shadow: 0 0 60px rgba(255, 107, 138, .8);
+            }
+        }
+
+        .heart-divider {
+            font-size: 2rem;
+            animation: pulse 1.8s ease infinite;
+            margin: 8px 0;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.3)
+            }
+        }
+
+        .sub-text {
+            font-size: clamp(.95rem, 2.5vw, 1.15rem);
+            color: #ffaabb;
+            font-style: italic;
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        /* ── Buttons ── */
+        .btn-row {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-yes,
+        .btn-no {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: .04em;
+            transition: transform .2s, box-shadow .2s;
+            user-select: none;
+            outline: none;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #c9154a, #ff6b8a);
+            color: #fff;
+            box-shadow: 0 6px 28px rgba(201, 21, 74, .55);
+            animation: yesBounce 2s ease infinite;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.07);
+            box-shadow: 0 14px 42px rgba(201, 21, 74, .75);
+        }
+
+        @keyframes yesBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #333, #555);
+            color: #ccc;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .4);
+            position: relative;
+            transition: transform 0.25s ease;
+        }
+
+        /* hint text under buttons */
+        .hint-text {
+            font-size: .8rem;
+            color: #ff6b8a99;
+            margin-top: 6px;
+            font-style: italic;
+            min-height: 1.2rem;
+            transition: opacity .4s;
+        }
+
+        /* ── Phase 2: YES celebration ── */
+        #yes-phase {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: fadeIn .8s ease both;
+        }
+
+        .yes-emoji {
+            font-size: 5rem;
+            animation: float 2.5s ease infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-16px)
+            }
+        }
+
+        .yes-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #fff0f4;
+            text-shadow: 0 0 40px rgba(201, 21, 74, .7);
+        }
+
+        .yes-msg {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #ffccd8;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #c9154a, #ff6b8a);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 6px 28px rgba(201, 21, 74, .55);
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 14px 40px rgba(201, 21, 74, .7);
+        }
+
+        /* ── Confetti pieces ── */
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 100;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ── fade in utility ── */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Back link */
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 24px;
+            color: #ff6b8a;
+            text-decoration: none;
+            font-size: .9rem;
+            opacity: .7;
+            transition: opacity .2s;
+            z-index: 200;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* ── Music button ── */
+        #musicBtn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #c9154a, #ff6b8a);
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201, 21, 74, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .2s, box-shadow .2s;
+            animation: musicGlow 2.5s ease infinite alternate;
+        }
+
+        #musicBtn:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 32px rgba(201, 21, 74, .8);
+        }
+
+        #musicBtn.playing {
+            animation: musicSpin 4s linear infinite;
+        }
+
+        @keyframes musicGlow {
+            from {
+                box-shadow: 0 4px 16px rgba(201, 21, 74, .5);
+            }
+
+            to {
+                box-shadow: 0 4px 32px rgba(255, 107, 138, .9);
+            }
+        }
+
+        @keyframes musicSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.08);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d0008;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #8b0038;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-link">← Back</a>
+
+    <!-- Floating background hearts -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <div class="stage">
+
+        <!-- PHASE 1: The Question -->
+        <div id="intro-phase">
+            <p class="sentence-tag" id="cycleText">✨ You deserve to feel loved again...</p>
+            <div class="heart-divider">💕</div>
+            <h1 class="main-question">Will you let me<br>love you again?</h1>
+            <p class="sub-text">
+                I know I may not have shown it perfectly every day.<br>
+                But my love for you has never faded — not even for a second.
+            </p>
+
+            <div class="btn-row" id="btnRow">
+                <button class="btn-yes" id="btnYes">Yes, always 💖</button>
+                <button class="btn-no" id="btnNo">No</button>
+            </div>
+            <p class="hint-text" id="hintText">&nbsp;</p>
+        </div>
+
+        <!-- PHASE 2: YES Celebration -->
+        <div id="yes-phase">
+            <div class="yes-emoji">🥰</div>
+            <h2 class="yes-title">I knew it! 💕</h2>
+            <p class="yes-msg">
+                That's all I needed to hear.<br>
+                I promise to love you better, louder, and every single day.<br>
+                <strong>You are everything to me.</strong>
+            </p>
+            <a href="index.html" class="continue-btn">See how much I love you 💌</a>
+        </div>
+
+    </div>
+
+    <script>
+        // ── Background hearts ───────────────────────────────────────
+        const bgH = document.getElementById('bgHearts');
+        const hEmojis = ['❤️', '💕', '💖', '💗', '🌹', '💞', '💝', '💓'];
+        function spawnBgHeart() {
+            const el = document.createElement('div');
+            el.className = 'bh';
+            el.textContent = hEmojis[Math.floor(Math.random() * hEmojis.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (.7 + Math.random() * 1.3) + 'rem';
+            const d = 7 + Math.random() * 9;
+            el.style.animationDuration = d + 's';
+            el.style.animationDelay = (Math.random() * 3) + 's';
+            bgH.appendChild(el);
+            setTimeout(() => el.remove(), (d + 3) * 1000);
+        }
+        setInterval(spawnBgHeart, 700);
+        for (let i = 0; i < 12; i++) spawnBgHeart();
+
+        // ── Cycling romantic sentences ──────────────────────────────
+        const sentences = [
+            '✨ You deserve to feel loved again...',
+            '🌹 You deserve to fall in love again...',
+            '💫 You deserve someone who never gives up...',
+            '🌙 You deserve to be someone\'s whole world...',
+            '💕 You deserve to feel chosen, every single day...',
+            '🎀 You deserve all the love you freely give...',
+        ];
+        let sIdx = 0;
+        const cycleEl = document.getElementById('cycleText');
+        setInterval(() => {
+            cycleEl.style.opacity = '0';
+            setTimeout(() => {
+                sIdx = (sIdx + 1) % sentences.length;
+                cycleEl.textContent = sentences[sIdx];
+                cycleEl.style.opacity = '1';
+            }, 500);
+        }, 3000);
+
+        // ── Runaway NO button ───────────────────────────────────────
+        const btnNo = document.getElementById('btnNo');
+        const hintText = document.getElementById('hintText');
+        const hints = [
+            "There's no \"no\" here 😏",
+            "Nice try! 😂",
+            "You can't catch it~",
+            "The answer is YES 💕",
+            "Stop it! 😄",
+            "This button is shy 🙈",
+            "Not happening! 💖",
+            "Still no 😂",
+        ];
+        let noAttempts = 0;
+        let currentX = 0, currentY = 0;
+
+        function runAway(e) {
+            noAttempts++;
+            e?.preventDefault();
+
+            // Show a hint
+            hintText.textContent = hints[noAttempts % hints.length];
+
+            // Jump to a new random offset — keep it on-screen by clamping
+            const maxOffX = Math.min(300, window.innerWidth * 0.25);
+            const maxOffY = Math.min(200, window.innerHeight * 0.2);
+            const directions = [-1, 1];
+            const dx = directions[Math.floor(Math.random() * 2)] * (80 + Math.random() * maxOffX);
+            const dy = directions[Math.floor(Math.random() * 2)] * (60 + Math.random() * maxOffY);
+            currentX += dx;
+            currentY += dy;
+
+            // Clamp so it never goes off-screen
+            const rect = btnNo.getBoundingClientRect();
+            const screenPad = 24;
+            const limitX = window.innerWidth - rect.width - screenPad;
+            const limitY = window.innerHeight - rect.height - screenPad;
+            currentX = Math.max(-(rect.left - screenPad), Math.min(currentX, limitX - rect.left));
+            currentY = Math.max(-(rect.top - screenPad), Math.min(currentY, limitY - rect.top));
+
+            btnNo.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }
+
+        btnNo.addEventListener('mouseover', runAway);
+        btnNo.addEventListener('touchstart', runAway, { passive: false });
+        btnNo.addEventListener('click', runAway);
+
+        // ── YES button ──────────────────────────────────────────────
+        document.getElementById('btnYes').addEventListener('click', () => {
+            // Hide phase 1, show phase 2
+            document.getElementById('intro-phase').style.display = 'none';
+            const yp = document.getElementById('yes-phase');
+            yp.style.display = 'flex';
+
+            // Confetti burst!
+            fireConfetti();
+        });
+
+        // ── Confetti ────────────────────────────────────────────────
+        const confettiColors = ['#ff6b8a', '#f5c842', '#c9154a', '#ffb3c6', '#fff', '#ff3c6c', '#ffd700'];
+        function fireConfetti() {
+            for (let i = 0; i < 120; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'confetti';
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                    el.style.width = (6 + Math.random() * 10) + 'px';
+                    el.style.height = (6 + Math.random() * 10) + 'px';
+                    el.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+                    const dur = 2 + Math.random() * 3;
+                    el.style.animationDuration = dur + 's';
+                    el.style.animationDelay = (Math.random() * .5) + 's';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), (dur + 1) * 1000);
+                }, i * 25);
+            }
+        }
+    </script>
+
+    <!-- Background music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicBtn" title="Toggle music">♫</button>
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+        let started = false;
+        function tryPlay() {
+            if (!started) {
+                audio.volume = 0.4;
+                audio.play().then(() => {
+                    started = true;
+                    btn.textContent = '♫';
+                    btn.classList.add('playing');
+                }).catch(() => { });
+            }
+        }
+        document.addEventListener('click', tryPlay, { once: true });
+        document.addEventListener('touchstart', tryPlay, { once: true });
+        document.addEventListener('scroll', tryPlay, { once: true });
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = '♫';
+                btn.classList.add('playing');
+                started = true;
+            } else {
+                audio.pause();
+                btn.textContent = '♪';
+                btn.classList.remove('playing');
+            }
+        });
+    </script>
+</body>
+
+</html>

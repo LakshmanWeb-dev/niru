@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You, My Love 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Music button ── */
+        #musicBtn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #c9154a, #ff6b8a);
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201, 21, 74, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .2s, box-shadow .2s;
+            animation: musicGlow 2.5s ease infinite alternate;
+        }
+
+        #musicBtn:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 32px rgba(201, 21, 74, .8);
+        }
+
+        #musicBtn.playing {
+            animation: musicSpin 4s linear infinite;
+        }
+
+        @keyframes musicGlow {
+            from {
+                box-shadow: 0 4px 16px rgba(201, 21, 74, .5);
+            }
+
+            to {
+                box-shadow: 0 4px 32px rgba(255, 107, 138, .9);
+            }
+        }
+
+        @keyframes musicSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.08);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Falling petals -->
+    <div class="petals-container" id="petalsContainer"></div>
+
+    <!-- SECTION 1: Hero / Landing -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <p class="tagline">A message, just for you</p>
+            <h1 class="hero-title">
+                You Are My<br>
+                <span class="gradient-text">Everything</span>
+            </h1>
+            <p class="hero-subtitle">And I never want you to forget it.</p>
+            <a href="proposal.html" class="cta-btn" style="margin-bottom:16px;">I Have a Question For You First 💌</a>
+            <br>
+            <a href="#reasons" class="cta-btn"
+                style="background:linear-gradient(135deg,#3a0030,#6a0040);box-shadow:0 4px 20px rgba(100,0,60,.5);font-size:.95rem;padding:12px 32px;">Skip
+                to the Love Letter ↓</a>
+        </div>
+        <div class="scroll-hint">↓ scroll ↓</div>
+    </section>
+
+    <!-- SECTION 2: Reasons I Love You -->
+    <section class="reasons-section" id="reasons">
+        <h2 class="section-title">Reasons I Love You</h2>
+        <p class="section-sub">Click each card to reveal a reason 💌</p>
+        <div class="cards-grid" id="cardsGrid">
+            <!-- Cards injected by JS -->
+        </div>
+    </section>
+
+    <!-- SECTION 3: Photo/Memory Gallery -->
+    <section class="memory-section" id="memories">
+        <h2 class="section-title">Us, in a Nutshell</h2>
+        <p class="section-sub">Every moment with you is golden ✨</p>
+        <div class="memories-grid">
+            <div class="memory-card" data-label="The moment I saw you">
+                <div class="memory-emoji">👀</div>
+                <p>The very first time my eyes found you — the world went quiet.</p>
+            </div>
+            <div class="memory-card" data-label="Our laughs">
+                <div class="memory-emoji">😂</div>
+                <p>Nobody makes me laugh like you do. You are my favorite kind of happiness.</p>
+            </div>
+            <div class="memory-card" data-label="Our quiet moments">
+                <div class="memory-emoji">🌙</div>
+                <p>Even silence feels perfect when I'm with you.</p>
+            </div>
+            <div class="memory-card" data-label="Your smile">
+                <div class="memory-emoji">😊</div>
+                <p>Your smile is the reason I want to wake up every single morning.</p>
+            </div>
+            <div class="memory-card" data-label="The way you care">
+                <div class="memory-emoji">🤝</div>
+                <p>You care in the smallest, most beautiful ways — and I notice every single one.</p>
+            </div>
+            <div class="memory-card" data-label="Our future">
+                <div class="memory-emoji">🌅</div>
+                <p>Every dream I have has you in it. Always.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3b: Her Photos Gallery -->
+    <section class="gallery-section" id="gallery">
+        <h2 class="section-title">You, Through My Eyes</h2>
+        <p class="section-sub">Every picture of you steals my breath away 📸</p>
+        <div class="gallery-grid">
+
+            <div class="gallery-item">
+                <img src="photos/photo1.jpg" alt="Her photo 1"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>My favorite smile 😊</span></div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="photos/photo2.jpg" alt="Her photo 2"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>So beautiful 🌹</span></div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="photos/photo3.jpg" alt="Her photo 3"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>My whole world 💖</span></div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="photos/photo4.jpg" alt="Her photo 4"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>My happy place 🌸</span></div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="photos/photo5.jpg" alt="Her photo 5"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>Always stunning ✨</span></div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="photos/photo6.jpg" alt="Her photo 6"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="gallery-fallback">📸</div>
+                <div class="gallery-overlay"><span>My everything 💕</span></div>
+            </div>
+
+        </div>
+        <p class="gallery-note">🌹 Add more photos in the <code>photos/</code> folder anytime</p>
+    </section>
+
+    <!-- SECTION 4: Love Letter -->
+    <section class="letter-section" id="letter">
+        <div class="letter-wrapper">
+            <div class="letter-paper">
+                <div class="letter-header">
+                    <span class="letter-date">February 25, 2026</span>
+                    <span class="letter-icon">💌</span>
+                </div>
+                <p class="letter-greeting">My dearest love,</p>
+                <p class="letter-body">
+                    I know sometimes life gets busy, and maybe I didn't always show it the way you deserved.
+                    But know this — <strong>you have never left my mind.</strong> Not for a single second.
+                </p>
+                <p class="letter-body">
+                    You are the warmth I look for on cold days. You are the voice I want to hear when everything goes
+                    wrong.
+                    You are the person I choose — <em>every day, every moment, without question.</em>
+                </p>
+                <p class="letter-body">
+                    I love you not just in words, but in every little thing I do.
+                    In the way I think of you when something good happens.
+                    In the way I reach for my phone just to tell you something silly.
+                    In the way I picture you in every tomorrow I imagine.
+                </p>
+                <p class="letter-body">
+                    You deserve to feel loved — <strong>completely, endlessly, overwhelmingly.</strong>
+                    And I promise you, that is exactly what I feel for you.
+                </p>
+                <p class="letter-closing">Forever yours, with all my heart 💕</p>
+                <p class="letter-signature">— The one who loves you most</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Promise Wall -->
+    <section class="promise-section" id="promises">
+        <h2 class="section-title">My Promises to You</h2>
+        <p class="section-sub">These are not just words. These are my vows to you. 🤞</p>
+        <div class="promise-list">
+            <div class="promise-item" style="--delay:0s">
+                <span class="promise-icon">🌹</span>
+                <p>I promise to love you even on the days you forget to love yourself.</p>
+            </div>
+            <div class="promise-item" style="--delay:0.1s">
+                <span class="promise-icon">🛡️</span>
+                <p>I promise to be your safe place — always.</p>
+            </div>
+            <div class="promise-item" style="--delay:0.2s">
+                <span class="promise-icon">⏳</span>
+                <p>I promise to give you my time, my presence, and my undivided attention.</p>
+            </div>
+            <div class="promise-item" style="--delay:0.3s">
+                <span class="promise-icon">😊</span>
+                <p>I promise to make you smile more than you cry because of me.</p>
+            </div>
+            <div class="promise-item" style="--delay:0.4s">
+                <span class="promise-icon">🔥</span>
+                <p>I promise to never stop choosing you, every single day.</p>
+            </div>
+            <div class="promise-item" style="--delay:0.5s">
+                <span class="promise-icon">💞</span>
+                <p>I promise that my love for you will only ever grow stronger.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Interactive Heart Click -->
+    <section class="heart-section" id="heartSection">
+        <h2 class="section-title">Click the Heart 💖</h2>
+        <p class="section-sub">Every click is a kiss from me to you</p>
+        <div class="big-heart-container">
+            <div class="big-heart" id="bigHeart">❤️</div>
+            <div class="heart-counter" id="heartCounter">0 kisses sent ✨</div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: Final Message -->
+    <section class="final-section" id="final">
+        <div class="final-content">
+            <div class="final-icon">💑</div>
+            <h2 class="final-title">You Are Loved.</h2>
+            <p class="final-message">
+                Always. Deeply. Truly. Without condition or limit.<br>
+                You are my favorite person in this universe.<br>
+                <strong>Yours, completely. 💕</strong>
+            </p>
+            <div class="stars-row">⭐💫✨🌟💫⭐</div>
+        </div>
+    </section>
+
+    <!-- Background music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicBtn" title="Toggle music">♫</button>
+
+    <script src="script.js"></script>
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+        let started = false;
+
+        function tryPlay() {
+            if (!started) {
+                audio.volume = 0.4;
+                audio.play().then(() => {
+                    started = true;
+                    btn.textContent = '♫';
+                    btn.classList.add('playing');
+                }).catch(() => { });
+            }
+        }
+
+        // Auto-start on any user interaction
+        document.addEventListener('click', tryPlay, { once: true });
+        document.addEventListener('touchstart', tryPlay, { once: true });
+        document.addEventListener('scroll', tryPlay, { once: true });
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = '♫';
+                btn.classList.add('playing');
+                started = true;
+            } else {
+                audio.pause();
+                btn.textContent = '♪';
+                btn.classList.remove('playing');
+            }
+        });
+    </script>
+</body>
+
+</html>
